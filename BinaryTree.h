@@ -1,24 +1,14 @@
 #pragma once
 
-struct Node
-{
-	int Data;
-	Node* LeftChild;
-	Node* RightChild;
-	Node* Parent;
-};
+#include "TreeTemplate.h"
 
-class BinaryTree
+class BinaryTree : public Tree<int>
 {
 public:
 	BinaryTree();
-	~BinaryTree();
+	~BinaryTree() override;
 
-	bool Insert(int data);
-	bool Delete(int target);
+	bool Insert(int data) override;
+	bool Delete(int target) override;
 	void ShowTree(Node*);
-
-	Node* root;
-private:
-	
 };

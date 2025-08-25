@@ -3,7 +3,6 @@
 
 BinaryTree::BinaryTree()
 {
-	root = nullptr;
 }
 
 BinaryTree::~BinaryTree()
@@ -13,16 +12,16 @@ BinaryTree::~BinaryTree()
 
 bool BinaryTree::Insert(int data)
 {
-	if (!root) {
-		root = new Node();
-		root->Data = data;
-		root->LeftChild = nullptr;
-		root->RightChild = nullptr;
-		root->Parent = nullptr;
+	if (!Root) {
+		Root = new Node();
+		Root->Data = data;
+		Root->LeftChild = nullptr;
+		Root->RightChild = nullptr;
+		Root->Parent = nullptr;
 		return true;
 	}
 
-    Node* temp = root;
+    Node* temp = Root;
     Node* parent = nullptr;
     while (temp) 
     {
@@ -50,9 +49,9 @@ bool BinaryTree::Insert(int data)
 
 bool BinaryTree::Delete(int target)
 {
-    if (!root) return false;
+    if (!Root) return false;
 
-	Node* temp = root;
+	Node* temp = Root;
     Node* deletenode = nullptr;
     Node* deleteparent = nullptr;
 
@@ -63,8 +62,8 @@ bool BinaryTree::Delete(int target)
         else
         {
             deleteparent = temp;
-            if (temp->Data < target) temp = temp->LeftChild;
-            else if (temp->Data > target) temp = temp->RightChild;
+            if (temp->Data < target) temp = temp->RightChild;
+            else if (temp->Data > target) temp = temp->LeftChild;
         }
     }
     if (!temp) return false;
@@ -72,8 +71,11 @@ bool BinaryTree::Delete(int target)
     if (temp->LeftChild == nullptr && temp->RightChild == nullptr)
     {
         deletenode = temp;
-        if (deletenode->Data < deleteparent->Data) deleteparent->LeftChild = nullptr;
-        else deleteparent->RightChild = nullptr;
+        if (deleteparent)
+        {
+            if (deletenode->Data < deleteparent->Data) deleteparent->LeftChild = nullptr;
+            else deleteparent->RightChild = nullptr;
+        }
     }
     else
     {
