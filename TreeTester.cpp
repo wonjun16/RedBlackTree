@@ -89,7 +89,7 @@ void TreeTester::Run()
 
 bool TreeTester::CheckTree(Tree<int>::Node* node)
 {
-	if (node == nullptr) return true;
+	if (node == nullptr || node == tree->GetNil()) return true;
 
 	bool result = true;
 

@@ -11,4 +11,5 @@ public:
 	bool Insert(int data) override;
 	bool Delete(int target) override;
 	void ShowTree(Node*);
+	void Clear(Node*);
 };

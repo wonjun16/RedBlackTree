@@ -7,7 +7,7 @@ BinaryTree::BinaryTree()
 
 BinaryTree::~BinaryTree()
 {
-
+    Clear(Root);
 }
 
 bool BinaryTree::Insert(int data)
@@ -99,8 +99,10 @@ bool BinaryTree::Delete(int target)
             }
         }
         
-        if (deletenode->Data < deleteparent->Data) deleteparent->LeftChild = nullptr;
-        else deleteparent->RightChild = nullptr;
+        Node* child = (deletenode->LeftChild) ? deletenode->LeftChild : deletenode->RightChild;
+
+        if (deletenode->Data < deleteparent->Data) deleteparent->LeftChild = child;
+        else deleteparent->RightChild = child;
         temp->Data = deletenode->Data;
     }
 
@@ -116,4 +118,12 @@ void BinaryTree::ShowTree(Node* node)
     ShowTree(node->LeftChild);
     printf("%d ", node->Data);
     ShowTree(node->RightChild);
+}
+
+void BinaryTree::Clear(Node* node)
+{
+    if (node == nullptr) return;
+    Clear(node->LeftChild);
+    Clear(node->RightChild);
+    delete node;
 }
