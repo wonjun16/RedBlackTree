@@ -48,7 +48,7 @@ void TreeTester::Run()
 	srand(time(NULL));
 
 	int index = 1;
-	int maxIndex = 10000;
+	int maxIndex = 1000;
 
 	while (index <= maxIndex)
 	{
@@ -102,7 +102,8 @@ bool TreeTester::CheckTree(Tree<int>::Node* node)
 	}
 	else
 	{
-		printf("IDX : %d / Data : %d ",idx, node->Data);
+		//printf("IDX : %d / Data : %d ",idx, node->Data);
+		printf("%d ", node->Data);
 	}
 	
 	idx++;

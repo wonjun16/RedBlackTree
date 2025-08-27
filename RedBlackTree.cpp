@@ -51,8 +51,63 @@ bool RedBlackTree::Insert(int data)
 	else parent->LeftChild = node;
 
 	//re balancing
+	while (parent && parent->Color == RED)
+	{
+		Node* grand = parent->Parent;
+		Node* uncle;
 
+		if (grand->LeftChild == parent)
+		{
+			uncle = grand->RightChild;
 
+			if (parent->Color == RED && uncle->Color == RED)
+			{
+				parent->Color = BLACK;
+				uncle->Color = BLACK;
+				grand->Color = RED;
+				node = grand;
+			}
+			else if (parent->RightChild == node)
+			{
+				RotateLeft(parent);
+				node = parent;
+			}
+			else if (parent->Color == RED && uncle->Color == BLACK)
+			{
+				parent->Color = BLACK;
+				grand->Color = RED;
+				RotateRight(grand);
+				node = parent;
+			}
+		}
+		else
+		{
+			uncle = grand->LeftChild;
+
+			if (parent->Color == RED && uncle->Color == RED)
+			{
+				parent->Color = BLACK;
+				uncle->Color = BLACK;
+				grand->Color = RED;
+				node = grand;
+			}
+			else if (parent->LeftChild == node)
+			{
+				RotateRight(parent);
+				node = parent;
+			}
+			else if (parent->Color == RED && uncle->Color == BLACK)
+			{
+				parent->Color = BLACK;
+				grand->Color = RED;
+				RotateLeft(grand);
+				node = parent;
+			}
+		}
+		parent = node->Parent;
+	}
+
+	Root->Color = BLACK;
 	return true;
 }
 
@@ -61,24 +116,48 @@ bool RedBlackTree::Delete(int target)
 	return false;
 }
 
-void RedBlackTree::TurnLeft(Node* node)
-{
-}
-
-void RedBlackTree::TurnRight(Node* node)
+void RedBlackTree::RotateLeft(Node* node)
 {
 	Node* parent = node->Parent;
-	Node* grand = parent->Parent;
-	Node* uncle = grand->RightChild;
-	Node* sibling = parent->RightChild;
-
-	if (grand->Parent)
+	Node* child = node->RightChild;
+	Node* gchild = child->LeftChild;
+	
+	if (parent)
 	{
-		if (grand->Parent->Data < grand->Data)grand->Parent->RightChild = parent;
-		else grand->Parent->LeftChild = parent;
+		if (parent->Data < child->Data) parent->RightChild = child;
+		else parent->LeftChild = child;
 	}
-	parent->Parent = grand->Parent;
+	child->Parent = parent;
+
+	child->LeftChild = node;
+	node->Parent = child;
+
+	node->RightChild = gchild;
+	gchild->Parent = node;
 
 
 
+	if (node == Root) Root = child;
+}
+
+void RedBlackTree::RotateRight(Node* node)
+{
+	Node* parent = node->Parent;
+	Node* child = node->LeftChild;
+	Node* gchild = child->RightChild;
+
+	if (parent)
+	{
+		if (parent->Data < child->Data) parent->RightChild = child;
+		else parent->LeftChild = child;
+	}
+	child->Parent = parent;
+
+	child->RightChild = node;
+	node->Parent = child;
+
+	node->LeftChild = gchild;
+	gchild->Parent = node;
+
+	if (node == Root) Root = child;
 }

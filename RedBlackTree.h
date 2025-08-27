@@ -12,6 +12,6 @@ public:
 	bool Delete(int target) override;
 
 private:
-	void TurnLeft(Node* node);
-	void TurnRight(Node* node);
+	void RotateLeft(Node* node);
+	void RotateRight(Node* node);
 };
