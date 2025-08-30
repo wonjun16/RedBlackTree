@@ -51,7 +51,7 @@ bool RedBlackTree::Insert(int data)
 	else parent->LeftChild = node;
 
 	//re balancing
-	while (parent && parent->Color == RED)
+	while (node->Color == RED && parent && parent->Color == RED)
 	{
 		Node* grand = parent->Parent;
 		Node* uncle;
@@ -134,8 +134,6 @@ void RedBlackTree::RotateLeft(Node* node)
 
 	node->RightChild = gchild;
 	gchild->Parent = node;
-
-
 
 	if (node == Root) Root = child;
 }
